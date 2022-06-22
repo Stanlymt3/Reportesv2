@@ -36,7 +36,8 @@ public class Inventario extends javax.swing.JFrame {
         panelBebidas = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         panelAbarroteria = new javax.swing.JPanel();
-        ok = new javax.swing.JButton();
+        lblProducto = new javax.swing.JLabel();
+        txtProducto = new javax.swing.JTextField();
         panelLibreria = new javax.swing.JPanel();
         panelMedicina = new javax.swing.JPanel();
 
@@ -113,23 +114,27 @@ public class Inventario extends javax.swing.JFrame {
 
         tbbpInterfaz.addTab("Bebidas", panelBebidas);
 
-        ok.setText("ok");
+        lblProducto.setText("Producto");
 
         javax.swing.GroupLayout panelAbarroteriaLayout = new javax.swing.GroupLayout(panelAbarroteria);
         panelAbarroteria.setLayout(panelAbarroteriaLayout);
         panelAbarroteriaLayout.setHorizontalGroup(
             panelAbarroteriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAbarroteriaLayout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(411, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(lblProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(400, Short.MAX_VALUE))
         );
         panelAbarroteriaLayout.setVerticalGroup(
             panelAbarroteriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAbarroteriaLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(panelAbarroteriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(361, Short.MAX_VALUE))
         );
 
         tbbpInterfaz.addTab("Abarroteria", panelAbarroteria);
@@ -222,12 +227,13 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton ok;
+    private javax.swing.JLabel lblProducto;
     private javax.swing.JPanel panelAbarroteria;
     private javax.swing.JPanel panelBebidas;
     private javax.swing.JPanel panelInicio;
     private javax.swing.JPanel panelLibreria;
     private javax.swing.JPanel panelMedicina;
     private javax.swing.JTabbedPane tbbpInterfaz;
+    private javax.swing.JTextField txtProducto;
     // End of variables declaration//GEN-END:variables
 }
