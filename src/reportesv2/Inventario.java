@@ -36,6 +36,7 @@ public class Inventario extends javax.swing.JFrame {
         panelBebidas = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         panelAbarroteria = new javax.swing.JPanel();
+        ok = new javax.swing.JButton();
         panelLibreria = new javax.swing.JPanel();
         panelMedicina = new javax.swing.JPanel();
 
@@ -112,15 +113,23 @@ public class Inventario extends javax.swing.JFrame {
 
         tbbpInterfaz.addTab("Bebidas", panelBebidas);
 
+        ok.setText("ok");
+
         javax.swing.GroupLayout panelAbarroteriaLayout = new javax.swing.GroupLayout(panelAbarroteria);
         panelAbarroteria.setLayout(panelAbarroteriaLayout);
         panelAbarroteriaLayout.setHorizontalGroup(
             panelAbarroteriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
+            .addGroup(panelAbarroteriaLayout.createSequentialGroup()
+                .addGap(126, 126, 126)
+                .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(411, Short.MAX_VALUE))
         );
         panelAbarroteriaLayout.setVerticalGroup(
             panelAbarroteriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 412, Short.MAX_VALUE)
+            .addGroup(panelAbarroteriaLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(ok, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         tbbpInterfaz.addTab("Abarroteria", panelAbarroteria);
@@ -213,6 +222,7 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton ok;
     private javax.swing.JPanel panelAbarroteria;
     private javax.swing.JPanel panelBebidas;
     private javax.swing.JPanel panelInicio;
