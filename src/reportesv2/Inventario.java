@@ -34,6 +34,7 @@ public class Inventario extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         panelBebidas = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
         panelAbarroteria = new javax.swing.JPanel();
         panelLibreria = new javax.swing.JPanel();
         panelMedicina = new javax.swing.JPanel();
@@ -53,8 +54,8 @@ public class Inventario extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(jButton1)
+                .addGap(59, 59, 59)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -68,11 +69,11 @@ public class Inventario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelInicioLayout = new javax.swing.GroupLayout(panelInicio);
@@ -90,15 +91,23 @@ public class Inventario extends javax.swing.JFrame {
 
         tbbpInterfaz.addTab("Inicio", panelInicio);
 
+        jButton5.setText("HOLA");
+
         javax.swing.GroupLayout panelBebidasLayout = new javax.swing.GroupLayout(panelBebidas);
         panelBebidas.setLayout(panelBebidasLayout);
         panelBebidasLayout.setHorizontalGroup(
             panelBebidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
+            .addGroup(panelBebidasLayout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         panelBebidasLayout.setVerticalGroup(
             panelBebidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 412, Short.MAX_VALUE)
+            .addGroup(panelBebidasLayout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         tbbpInterfaz.addTab("Bebidas", panelBebidas);
@@ -202,6 +211,7 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelAbarroteria;
     private javax.swing.JPanel panelBebidas;
