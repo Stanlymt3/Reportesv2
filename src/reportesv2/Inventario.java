@@ -9,7 +9,7 @@ public class Inventario extends javax.swing.JFrame {
     }
     
     double iva, precioIva, dineroTotal, cantidad;
-    int contador=0, datoTabla;
+    int contador=1, datoTabla;
     String contadorS, ivaS, precioIvaS, dineroTotalS;
     
     InsertarDatos insertarDato = new InsertarDatos();

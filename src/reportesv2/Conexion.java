@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 
 public class Conexion {
-    private final String url="bkjemzmxcoa1eelwlf6j-mysql.services.clever-cloud.com";
+    private final String url="jdbc:mysql://bkjemzmxcoa1eelwlf6j-mysql.services.clever-cloud.com:3306/bkjemzmxcoa1eelwlf6j";
     private final String login="udv0mxxkekbzv4rz";
     private final String password="OIEIxuowHTQhM8O3S7Jr";
     private final String puerto = "3306";
@@ -21,7 +21,7 @@ public class Conexion {
     public Conexion(){
         try
         {
-            Class.forName("jdb:sqlserver://"+login+":"+puerto+"/"+login);
+            Class.forName("com.mysql.jdbc.Driver");
             cnx=DriverManager.getConnection(url, login, password);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"ERROR:"+ ex.getMessage());
@@ -35,7 +35,7 @@ public class Conexion {
     //Metodo UID
     public void UID(String sql){
         try {
-            Class.forName("\"jdb:sqlserver://\"+login+\":\"+puerto+\"/\"+login");
+            Class.forName("com.mysql.jdbc.Driver");
             cnx=DriverManager.getConnection(url, login, password);
             sttm=cnx.createStatement();
             sttm.executeUpdate(sql);
@@ -51,7 +51,7 @@ public class Conexion {
     //Metodo Consultar
     public ResultSet getValores(String sql){
         try {
-            Class.forName("\"jdb:sqlserver://\"+login+\":\"+puerto+\"/\"+login");
+            Class.forName("com.mysql.jdbc.Driver");
             cnx=DriverManager.getConnection(url, login, password);
             sttm=cnx.createStatement();
             sttm.executeQuery(sql);
