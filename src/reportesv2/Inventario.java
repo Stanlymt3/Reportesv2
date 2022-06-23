@@ -1,7 +1,10 @@
 package reportesv2;
 
 import javax.swing.JOptionPane;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Inventario extends javax.swing.JFrame {
     public Inventario() {
@@ -9,9 +12,9 @@ public class Inventario extends javax.swing.JFrame {
     }
     
     double iva, precioIva, dineroTotal, cantidad;
-    int contador=1, datoTabla;
-    String contadorS, ivaS, precioIvaS, dineroTotalS;
-    
+    int contador=0, datoTabla, numeroDato;
+    String contadorS, ivaS, precioIvaS, dineroTotalS, dato;
+    ResultSet rs;
     InsertarDatos insertarDato = new InsertarDatos();
     
 
@@ -165,8 +168,17 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        contador=contador+1;
-        contadorS = contador+"";
+        rs = null;
+        rs = insertarDato.contarRegistrosBebidas();
+        try {
+            while (rs.next()) {
+                contador = rs.getInt(1)+1;
+                contadorS = contador+"";
+            }
+        } catch (Exception e) {
+            contador = 1;
+            contadorS = contador + "";
+        }
         //calculo del iva 
         //proviene de multiplicar el precio * el porcentaje del iva(13%)
         double precio;
