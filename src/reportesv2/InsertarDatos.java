@@ -54,5 +54,10 @@ public class InsertarDatos {
         cn.UID("UPDATE "+Tabla+" SET Numero='"+Numero+"',Nombre_del_producto='"+Nombre_del_producto+"',Cantidad='"+Cantidad+"',Precio_sin_iva='"+Precio_sin_iva+"',Iva='"+Iva+"',Precio_con_iva='"+Precio_con_iva+"',Dinero_total='"+Dinero_total+"'WHERE Numero='"+codigo+"'");
         
     }
+    //Metodo Eliminar 
+    
+    public void eliminar(String Tabla, String Numero){
+        cn.UID("DELETE FROM"+Tabla+" WHERE Numero='"+Numero+"'");    
+    }
     
 }

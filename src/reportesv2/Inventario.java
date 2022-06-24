@@ -129,6 +129,11 @@ public class Inventario extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setText("Actualizar");
         btnActualizar.setEnabled(false);
@@ -513,6 +518,29 @@ public class Inventario extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCantidad.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campos vacios", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            if (cmbTabla.getSelectedIndex() == 1) {//bebidas
+                Tabla = "bebidas";
+                String num = this.txtId.getText();
+                insertarDato.eliminar(Tabla, num);
+
+            } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
+
+            } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
+
+            } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
+
+            }
+
+        }
+
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
