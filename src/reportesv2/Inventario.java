@@ -484,19 +484,24 @@ public class Inventario extends javax.swing.JFrame {
             if (cmbTabla.getSelectedIndex() == 1) {//bebidas
                 Tabla = "bebidas";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(),ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+                codigo = txtId.getText();
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
+                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
                 Tabla = "Abarrotes";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(), ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
+                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
                 Tabla = "Medicina";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(), ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
+                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
                 Tabla = "Libreria";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(), ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
+                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             }
         }
 

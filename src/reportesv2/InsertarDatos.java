@@ -50,8 +50,8 @@ public class InsertarDatos {
     }
 
     //Metodo modificar 
-    public void modificar(String Tabla, String Numero, String Nombre_del_producto, String Cantidad, String Precio_sin_iva, String Iva, String Precio_con_iva, String Dinero_total) {
-        cn.UID("UPDATE " + Tabla + "SET='" + Numero + "','" + Nombre_del_producto + "','" + Cantidad + "','" + Precio_sin_iva + "','" + Iva + "','" + Precio_con_iva + "','" + Dinero_total + "' WHERE Numero='" + Numero + "'");
+    public void modificar(String Tabla, String Numero, String Nombre_del_producto, String Cantidad, String Precio_sin_iva, String Iva, String Precio_con_iva, String Dinero_total, String codigo) {
+        cn.UID("UPDATE "+Tabla+" SET Numero='"+Numero+"',Nombre_del_producto='"+Nombre_del_producto+"',Cantidad='"+Cantidad+"',Precio_sin_iva='"+Precio_sin_iva+"',Iva='"+Iva+"',Precio_con_iva='"+Precio_con_iva+"',Dinero_total='"+Dinero_total+"'WHERE Numero='"+codigo+"'");
         
     }
     
