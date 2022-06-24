@@ -14,10 +14,11 @@ public class Inventario extends javax.swing.JFrame {
 
     double iva, precioIva, dineroTotal, cantidad;
     int contador = 0, datoTabla, numeroDato;
-    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo;
+    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla;
     boolean error = false, llave = false;
-    ResultSet rs = null;
+    ResultSet rs = null, rt = null;
     InsertarDatos insertarDato = new InsertarDatos();
+    
 
     public void calculos() {
         double precio;
@@ -398,42 +399,35 @@ public class Inventario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cmbTablaActionPerformed
 
+    
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        txtId.setEditable(false);
-        if (!txtId.getText().isEmpty()) {
-            rs = insertarDato.contarRegistrosBebidas();
-            try {
-                while (rs.next()) {
-                    if (cmbTabla.getSelectedIndex() == 0) {
-                        JOptionPane.showMessageDialog(null, "Favor seleccione categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
-                    } else if (cmbTabla.getSelectedIndex() == 1) { //bebidas
-                        codigo = txtId.getText();
-                        insertarDato.buscarBebidas(codigo);
-                        llave = true;
-                    } else if (cmbTabla.getSelectedIndex() == 2) {//Abarrotes
-                        codigo = txtId.getText();
-                        insertarDato.buscarAbarrotes(codigo);
-                        llave = true;
-                    } else if (cmbTabla.getSelectedIndex() == 3) {//Medicina
-                        codigo = txtId.getText();
-                        insertarDato.buscarMedicina(codigo);
-                        llave = true;
-                    } else if (cmbTabla.getSelectedIndex() == 4) {//Libreria
-                        codigo = txtId.getText();
-                        insertarDato.buscarLibreria(codigo);
-                        llave = true;
-                    }
-                    if (llave == false) {
-                        JOptionPane.showMessageDialog(null, "Jugo no encontrado", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
-                    }
-                    llave = false;
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+        codigo = txtId.getText();
+        if (cmbTabla.getSelectedIndex() == 1){//bebidas
+            Tabla = "bebidas";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbTabla.getSelectedIndex() == 2){//abarrotes
+            Tabla = "Abarrotes";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbTabla.getSelectedIndex() == 3){//medicina
+            Tabla = "Medicina";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbTabla.getSelectedIndex() == 4){//libreria
+            Tabla = "Libreria";
+            rt = insertarDato.buscar(Tabla, codigo);
+        }
+        
+        try {
+            while (rt.next()) {                
+                if(cmbTabla.getSelectedIndex() == 0){
+                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria","MENSAJE DE ERROR",JOptionPane.ERROR_MESSAGE);
+                } else if (cmbTabla.getSelectedIndex() != 0){
+                    this.txtNombre.setText(rt.getString(2));
+                    this.txtCantidad.setText(rt.getString(3));
+                    this.txtPrecio.setText(rt.getString(4));
+                } 
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Favor ingrese el id a buscar", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA "+e);
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed

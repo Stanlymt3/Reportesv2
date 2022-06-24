@@ -45,6 +45,10 @@ public class InsertarDatos {
     }
 
     //Metodos Buscar
+    public ResultSet buscar(String Tabla, String codigo) {
+        return (cn.getValores("SELECT * FROM "+Tabla+" WHERE Numero='" + codigo + "'"));
+    }
+    
     public ResultSet buscarBebidas(String codigo) {
         return (cn.getValores("SELECT * FROM bebidas WHERE Numero='" + codigo + "'"));
     }
