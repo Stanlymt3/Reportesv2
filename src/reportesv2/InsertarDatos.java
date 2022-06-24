@@ -48,22 +48,6 @@ public class InsertarDatos {
     public ResultSet buscar(String Tabla, String codigo) {
         return (cn.getValores("SELECT * FROM "+Tabla+" WHERE Numero='" + codigo + "'"));
     }
-    
-    public ResultSet buscarBebidas(String codigo) {
-        return (cn.getValores("SELECT * FROM bebidas WHERE Numero='" + codigo + "'"));
-    }
-
-    public ResultSet buscarAbarrotes(String codigo) {
-        return (cn.getValores("SELECT * FROM Abarrotes WHERE Numero='" + codigo + "'"));
-    }
-
-    public ResultSet buscarMedicina(String codigo) {
-        return (cn.getValores("SELECT * FROM Medicina WHERE Numero='" + codigo + "'"));
-    }
-
-    public ResultSet buscarLibreria(String codigo) {
-        return (cn.getValores("SELECT * FROM Libreria WHERE Numero='" + codigo + "'"));
-    }
 
     //Metodo modificar 
     public void modificarBebidas(String Numero, String Nombre_del_producto, String Cantidad, String Precio_sin_iva, String Iva, String Precio_con_iva, String Dinero_total) {//Bebidas
