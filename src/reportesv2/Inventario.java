@@ -15,7 +15,7 @@ public class Inventario extends javax.swing.JFrame {
 
     double iva, precioIva, dineroTotal, cantidad;
     int contador = 0, datoTabla, numeroDato;
-    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla;
+    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla,nombre;
     boolean error = false, llave = false, buscar = false;
     ResultSet rs = null, rt = null, rn = null;
     InsertarDatos insertarDato = new InsertarDatos();
@@ -78,7 +78,7 @@ public class Inventario extends javax.swing.JFrame {
         BtnSalir = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbRegistro = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtBuscarId = new javax.swing.JTextField();
@@ -298,7 +298,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Agregar", jPanel2);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Categoria", "Bebidas", "Abarrotes", "Medicina", "Libreria" }));
+        cmbRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Categoria", "Bebidas", "Abarrotes", "Medicina", "Libreria" }));
 
         jLabel5.setText("Id");
 
@@ -313,8 +313,18 @@ public class Inventario extends javax.swing.JFrame {
         txtBuscarPrecio.setEditable(false);
 
         btnBuscarId.setText("Buscar por id");
+        btnBuscarId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarIdActionPerformed(evt);
+            }
+        });
 
         btnBuscarNombre.setText("Buscar por nombre");
+        btnBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarNombreActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Iva");
 
@@ -340,7 +350,7 @@ public class Inventario extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,7 +390,7 @@ public class Inventario extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -804,6 +814,72 @@ public class Inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTablaActionPerformed
 
+    private void btnBuscarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIdActionPerformed
+        codigo = txtBuscarId.getText();
+        if (cmbRegistro.getSelectedIndex() == 1) {//bebidas
+            Tabla = "bebidas";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
+            Tabla = "Abarrotes";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbRegistro.getSelectedIndex() == 3) {//medicina
+            Tabla = "Medicina";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
+            Tabla = "Libreria";
+            rt = insertarDato.buscar(Tabla, codigo);
+        }else if (cmbRegistro.getSelectedIndex() == 0) {//libreria
+            JOptionPane.showMessageDialog(null,"seleccione una categoria");
+        }
+
+        try {
+            while (rt.next()) {
+                if (cmbRegistro.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+                } else if (cmbRegistro.getSelectedIndex() != 0) {
+                    this.txtBuscarNombre.setText(rt.getString(2));
+                    this.txtBuscarCantidad.setText(rt.getString(3));
+                    this.txtBuscarPrecio.setText(rt.getString(4));
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+        }
+    }//GEN-LAST:event_btnBuscarIdActionPerformed
+
+    private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
+        nombre = txtBuscarNombre.getText();
+        if (cmbRegistro.getSelectedIndex() == 1) {//bebidas
+            Tabla = "bebidas";
+            rt = insertarDato.buscarNombre(Tabla, nombre);
+        } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
+            Tabla = "Abarrotes";
+            rt = insertarDato.buscarNombre(Tabla, nombre);
+        } else if (cmbRegistro.getSelectedIndex() == 3) {//medicina
+            Tabla = "Medicina";
+            rt = insertarDato.buscarNombre(Tabla, nombre);
+        } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
+            Tabla = "Libreria";
+            rt = insertarDato.buscarNombre(Tabla, nombre);
+        }else if (cmbRegistro.getSelectedIndex() == 0) {//libreria
+            JOptionPane.showMessageDialog(null,"seleccione una categoria");
+        }
+
+        try {
+            while (rt.next()) {
+                if (cmbRegistro.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+                } else if (cmbRegistro.getSelectedIndex() != 0) {
+                    this.txtBuscarId.setText(rt.getString(1));
+                    this.txtBuscarCantidad.setText(rt.getString(3));
+                    this.txtBuscarPrecio.setText(rt.getString(4));
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+        }
+    }//GEN-LAST:event_btnBuscarNombreActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -856,10 +932,10 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton btnTabla;
     private javax.swing.JToggleButton btnUltimo;
     private javax.swing.JCheckBox chkBuscar;
+    private javax.swing.JComboBox<String> cmbRegistro;
     private javax.swing.JComboBox<String> cmbTabla;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
