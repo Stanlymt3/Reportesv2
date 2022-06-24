@@ -64,6 +64,11 @@ public class Inventario extends javax.swing.JFrame {
         });
 
         cmbTabla.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar categoria", "Bebidas", "Abarrotes", "Medicina", "Libreria" }));
+        cmbTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTablaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -258,22 +263,45 @@ public class Inventario extends javax.swing.JFrame {
         dineroTotalS=dineroTotal+"";
         
         //Obtener la informacion de la tabla a la cual insertar los datos
-        if(cmbTabla.getSelectedIndex() == 1){ //bebidas
+        if (cmbTabla.getSelectedIndex() == 1) { //bebidas
             insertarDato.insertarBebida(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-        } else if(cmbTabla.getSelectedIndex() == 2){ // abarroteria
+            txtNombre.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            txtNombre.requestFocus();
+        } else if (cmbTabla.getSelectedIndex() == 2) { // abarroteria
             insertarDato.insertarAbarrote(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-        } else if (cmbTabla.getSelectedIndex() == 3){ //medicina
+            txtNombre.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            txtNombre.requestFocus();
+        } else if (cmbTabla.getSelectedIndex() == 3) { //medicina
             insertarDato.insertarMedicina(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-        } else if (cmbTabla.getSelectedIndex() == 4){ // Libreria
+            txtNombre.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            txtNombre.requestFocus();
+        } else if (cmbTabla.getSelectedIndex() == 4) { // Libreria
             insertarDato.insertarLibreria(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
+            txtNombre.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            txtNombre.requestFocus();
         } else if (cmbTabla.getSelectedIndex() == 0) { //opcion default
             JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void cmbTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTablaActionPerformed
+        txtNombre.setText("");
+        txtCantidad.setText("");
+        txtPrecio.setText("");
+        txtNombre.requestFocus();
+    }//GEN-LAST:event_cmbTablaActionPerformed
 
     /**
      * @param args the command line arguments
