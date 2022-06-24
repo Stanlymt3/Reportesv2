@@ -673,21 +673,24 @@ public class Inventario extends javax.swing.JFrame {
         } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
             Tabla = "Libreria";
             rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbTabla.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
-        try {
-            while (rt.next()) {
-                if (cmbTabla.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
-                } else if (cmbTabla.getSelectedIndex() != 0) {
-                    this.txtNombre.setText(rt.getString(2));
-                    this.txtCantidad.setText(rt.getString(3));
-                    this.txtPrecio.setText(rt.getString(4));
+        if (rt != null) {
+            try {
+                while (rt.next()) {
+                    if (cmbTabla.getSelectedIndex() != 0) {
+                        this.txtNombre.setText(rt.getString(2));
+                        this.txtCantidad.setText(rt.getString(3));
+                        this.txtPrecio.setText(rt.getString(4));
+                    }
                 }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
         }
+
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -828,23 +831,24 @@ public class Inventario extends javax.swing.JFrame {
         } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
             Tabla = "Libreria";
             rt = insertarDato.buscar(Tabla, codigo);
-        }else if (cmbRegistro.getSelectedIndex() == 0) {//libreria
-            JOptionPane.showMessageDialog(null,"seleccione una categoria");
+        }else if (cmbRegistro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "seleccione una categoria");
         }
 
-        try {
-            while (rt.next()) {
-                if (cmbRegistro.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
-                } else if (cmbRegistro.getSelectedIndex() != 0) {
-                    this.txtBuscarNombre.setText(rt.getString(2));
-                    this.txtBuscarCantidad.setText(rt.getString(3));
-                    this.txtBuscarPrecio.setText(rt.getString(4));
+        if (rt != null) {
+            try {
+                while (rt.next()) {
+                    if (cmbRegistro.getSelectedIndex() != 0) {
+                        this.txtBuscarNombre.setText(rt.getString(2));
+                        this.txtBuscarCantidad.setText(rt.getString(3));
+                        this.txtBuscarPrecio.setText(rt.getString(4));
+                    }
                 }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
         }
+
     }//GEN-LAST:event_btnBuscarIdActionPerformed
 
     private void btnBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNombreActionPerformed
@@ -861,23 +865,24 @@ public class Inventario extends javax.swing.JFrame {
         } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
             Tabla = "Libreria";
             rt = insertarDato.buscarNombre(Tabla, nombre);
-        }else if (cmbRegistro.getSelectedIndex() == 0) {//libreria
-            JOptionPane.showMessageDialog(null,"seleccione una categoria");
+        }else if (cmbRegistro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "seleccione una categoria");
         }
 
-        try {
-            while (rt.next()) {
-                if (cmbRegistro.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
-                } else if (cmbRegistro.getSelectedIndex() != 0) {
-                    this.txtBuscarId.setText(rt.getString(1));
-                    this.txtBuscarCantidad.setText(rt.getString(3));
-                    this.txtBuscarPrecio.setText(rt.getString(4));
+        if (rt != null) {
+            try {
+                while (rt.next()) {
+                    if (cmbRegistro.getSelectedIndex() != 0) {
+                        this.txtBuscarId.setText(rt.getString(1));
+                        this.txtBuscarCantidad.setText(rt.getString(3));
+                        this.txtBuscarPrecio.setText(rt.getString(4));
+                    }
                 }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
         }
+
     }//GEN-LAST:event_btnBuscarNombreActionPerformed
 
     /**
