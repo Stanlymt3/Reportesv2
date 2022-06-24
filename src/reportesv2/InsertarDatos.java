@@ -60,4 +60,7 @@ public class InsertarDatos {
         cn.UID("DELETE FROM "+Tabla+" WHERE Numero='"+codigo+"'");    
     }
     
+    public ResultSet buscarNombre(String Tabla, String nombre) {
+        return (cn.getValores("SELECT * FROM " + Tabla + " WHERE Nombre_del_Producto='" + nombre + "'"));
+    }
 }
