@@ -16,9 +16,8 @@ public class Inventario extends javax.swing.JFrame {
     int contador = 0, datoTabla, numeroDato;
     String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla;
     boolean error = false, llave = false;
-    ResultSet rs = null, rt = null;
+    ResultSet rs = null, rt = null, rn = null;
     InsertarDatos insertarDato = new InsertarDatos();
-    
 
     public void calculos() {
         double precio;
@@ -133,6 +132,11 @@ public class Inventario extends javax.swing.JFrame {
 
         btnActualizar.setText("Actualizar");
         btnActualizar.setEnabled(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -399,35 +403,35 @@ public class Inventario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cmbTablaActionPerformed
 
-    
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         codigo = txtId.getText();
-        if (cmbTabla.getSelectedIndex() == 1){//bebidas
+        if (cmbTabla.getSelectedIndex() == 1) {//bebidas
             Tabla = "bebidas";
             rt = insertarDato.buscar(Tabla, codigo);
-        } else if (cmbTabla.getSelectedIndex() == 2){//abarrotes
+        } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
             Tabla = "Abarrotes";
             rt = insertarDato.buscar(Tabla, codigo);
-        } else if (cmbTabla.getSelectedIndex() == 3){//medicina
+        } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
             Tabla = "Medicina";
             rt = insertarDato.buscar(Tabla, codigo);
-        } else if (cmbTabla.getSelectedIndex() == 4){//libreria
+        } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
             Tabla = "Libreria";
             rt = insertarDato.buscar(Tabla, codigo);
         }
-        
+
         try {
-            while (rt.next()) {                
-                if(cmbTabla.getSelectedIndex() == 0){
-                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria","MENSAJE DE ERROR",JOptionPane.ERROR_MESSAGE);
-                } else if (cmbTabla.getSelectedIndex() != 0){
+            while (rt.next()) {
+                if (cmbTabla.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+                } else if (cmbTabla.getSelectedIndex() != 0) {
                     this.txtNombre.setText(rt.getString(2));
                     this.txtCantidad.setText(rt.getString(3));
                     this.txtPrecio.setText(rt.getString(4));
-                } 
+                }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA "+e);
+            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -463,17 +467,41 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
+        txtId.setEnabled(false);
+        txtNombre.setEnabled(true);
+        txtCantidad.setEnabled(true);
+        txtPrecio.setEnabled(true);
+        txtNombre.requestFocus();
+
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCantidad.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campos vacios", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
 
         } else {
-
-            insertarDato.modificarBebidas(txtId.getText(), txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
-            calculos();
-            JOptionPane.showMessageDialog(null,"Datos actualizados","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+            if (cmbTabla.getSelectedIndex() == 1) {//bebidas
+                Tabla = "bebidas";
+                calculos();
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(),ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+            } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
+                Tabla = "Abarrotes";
+                calculos();
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(), ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+            } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
+                Tabla = "Medicina";
+                calculos();
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(), ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+            } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
+                Tabla = "Libreria";
+                calculos();
+                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), txtPrecio.getText(), ivaS,  precioIvaS, dineroTotalS,this.txtId.getText());
+            }
         }
 
-    }//GEN-LAST:event_btnModificarActionPerformed
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
