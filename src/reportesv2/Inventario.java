@@ -13,8 +13,8 @@ public class Inventario extends javax.swing.JFrame {
     
     double iva, precioIva, dineroTotal, cantidad;
     int contador=0, datoTabla, numeroDato;
-    String contadorS="", ivaS, precioIvaS, dineroTotalS, dato;
-    boolean error = false;
+    String contadorS="", ivaS, precioIvaS, dineroTotalS, dato, codigo;
+    boolean error = false, llave = false;
     ResultSet rs=null;
     InsertarDatos insertarDato = new InsertarDatos();
     
@@ -42,7 +42,7 @@ public class Inventario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        btnIngresar = new javax.swing.JButton();
+        chkBuscar = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -86,16 +86,17 @@ public class Inventario extends javax.swing.JFrame {
         });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.setEnabled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
 
-        btnIngresar.setText("Ingresar id");
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+        chkBuscar.setText("Buscar");
+        chkBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+                chkBuscarActionPerformed(evt);
             }
         });
 
@@ -117,10 +118,7 @@ public class Inventario extends javax.swing.JFrame {
                             .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(cmbTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -128,8 +126,10 @@ public class Inventario extends javax.swing.JFrame {
                         .addComponent(btnInsertar)))
                 .addGap(74, 74, 74))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(btnBuscar)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscar)
+                    .addComponent(chkBuscar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -139,7 +139,6 @@ public class Inventario extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnIngresar)
                     .addComponent(cmbTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -156,8 +155,10 @@ public class Inventario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInsertar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkBuscar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar", jPanel2);
@@ -218,75 +219,6 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (cmbTabla.getSelectedIndex() == 1) { //opcion bebidas
-            try {
-                rs = insertarDato.contarRegistrosBebidas();
-                while (rs.next()) {
-                    contador = rs.getInt(1);
-                    if (contador != 0) {
-                        contador = rs.getInt(1) + 1;
-                        contadorS = contador + "";
-                    } else {
-                        contador = 1;
-                        contadorS = contador + "";
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
-            }
-        } else if (cmbTabla.getSelectedIndex() == 2) { //opcion abarrotes
-            try {
-                rs = insertarDato.contarRegistrosAbarrotes();
-                JOptionPane.showMessageDialog(null, " rs: " + rs);
-                while (rs.next()) {
-                    contador = rs.getInt(1);
-                    if (contador != 0) {
-                        contador = rs.getInt(1) + 1;
-                        contadorS = contador + "";
-                    } else {
-                        contador = 1;
-                        contadorS = contador + "";
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
-            }
-        } else if (cmbTabla.getSelectedIndex() == 3) { //opcion medicina
-            try {
-                rs = insertarDato.contarRegistrosMedicina();
-                JOptionPane.showMessageDialog(null, " rs: " + rs);
-                while (rs.next()) {
-                    contador = rs.getInt(1);
-                    if (contador != 0) {
-                        contador = rs.getInt(1) + 1;
-                        contadorS = contador + "";
-                    } else {
-                        contador = 1;
-                        contadorS = contador + "";
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
-            }
-        } else if (cmbTabla.getSelectedIndex() == 4) { //opcion libreria
-            try {
-                rs = insertarDato.contarRegistrosLibreria();
-                JOptionPane.showMessageDialog(null, " rs: " + rs);
-                while (rs.next()) {
-                    contador = rs.getInt(1);
-                    if (contador != 0) {
-                        contador = rs.getInt(1) + 1;
-                        contadorS = contador + "";
-                    } else {
-                        contador = 1;
-                        contadorS = contador + "";
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
-            }
-        }
-
         //calculo del iva 
         //proviene de multiplicar el precio * el porcentaje del iva(13%)
         double precio;
@@ -312,6 +244,8 @@ public class Inventario extends javax.swing.JFrame {
             txtCantidad.setText("");
             txtPrecio.setText("");
             txtNombre.requestFocus();
+            int id = Integer.parseInt(txtId.getText()) + 1;
+            txtId.setText(id + "");
         } else if (cmbTabla.getSelectedIndex() == 2) { // abarroteria
             insertarDato.insertarAbarrote(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
@@ -320,6 +254,8 @@ public class Inventario extends javax.swing.JFrame {
             txtPrecio.setText("");
             txtNombre.requestFocus();
             error = false;
+            int id = Integer.parseInt(txtId.getText()) + 1;
+            txtId.setText(id + "");
         } else if (cmbTabla.getSelectedIndex() == 3) { //medicina
             insertarDato.insertarMedicina(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
@@ -328,6 +264,8 @@ public class Inventario extends javax.swing.JFrame {
             txtPrecio.setText("");
             txtNombre.requestFocus();
             error = false;
+            int id = Integer.parseInt(txtId.getText()) + 1;
+            txtId.setText(id + "");
         } else if (cmbTabla.getSelectedIndex() == 4) { // Libreria
             insertarDato.insertarLibreria(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
@@ -336,6 +274,8 @@ public class Inventario extends javax.swing.JFrame {
             txtPrecio.setText("");
             txtNombre.requestFocus();
             error = false;
+            int id = Integer.parseInt(txtId.getText()) + 1;
+            txtId.setText(id + "");
         } else if (cmbTabla.getSelectedIndex() == 0) { //opcion default
             JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
             error = true;
@@ -343,6 +283,79 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void cmbTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTablaActionPerformed
+        if (cmbTabla.getSelectedIndex() == 1) { //opcion bebidas
+            try {
+                rs = insertarDato.contarRegistrosBebidas();
+                while (rs.next()) {
+                    contador = rs.getInt(1);
+                    if (contador != 0) {
+                        contador = rs.getInt(1) + 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    } else {
+                        contador = 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
+            }
+        } else if (cmbTabla.getSelectedIndex() == 2) { //opcion abarrotes
+            try {
+                rs = insertarDato.contarRegistrosAbarrotes();
+                while (rs.next()) {
+                    contador = rs.getInt(1);
+                    if (contador != 0) {
+                        contador = rs.getInt(1) + 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    } else {
+                        contador = 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
+            }
+        } else if (cmbTabla.getSelectedIndex() == 3) { //opcion medicina
+            try {
+                rs = insertarDato.contarRegistrosMedicina();
+                while (rs.next()) {
+                    contador = rs.getInt(1);
+                    if (contador != 0) {
+                        contador = rs.getInt(1) + 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    } else {
+                        contador = 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
+            }
+        } else if (cmbTabla.getSelectedIndex() == 4) { //opcion libreria
+            try {
+                rs = insertarDato.contarRegistrosLibreria();
+                while (rs.next()) {
+                    contador = rs.getInt(1);
+                    if (contador != 0) {
+                        contador = rs.getInt(1) + 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    } else {
+                        contador = 1;
+                        contadorS = contador + "";
+                        txtId.setText(contadorS);
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
+            }
+        }
         if (error == false) {
             txtNombre.setText("");
             txtCantidad.setText("");
@@ -352,18 +365,68 @@ public class Inventario extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmbTablaActionPerformed
 
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        txtId.setEditable(true);
-    }//GEN-LAST:event_btnIngresarActionPerformed
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
         txtId.setEditable(false);
+        if (!txtId.getText().isEmpty()) {
+            rs = insertarDato.contarRegistrosBebidas();
+            try {
+                while (rs.next()) {
+                    if (cmbTabla.getSelectedIndex() == 0) {
+                        JOptionPane.showMessageDialog(null, "Favor seleccione categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+                    } else if (cmbTabla.getSelectedIndex() == 1) { //bebidas
+                        codigo = txtId.getText();
+                        insertarDato.buscarBebidas(codigo);
+                        llave = true;
+                    } else if (cmbTabla.getSelectedIndex() == 2) {//Abarrotes
+                        codigo = txtId.getText();
+                        insertarDato.buscarAbarrotes(codigo);
+                        llave = true;
+                    } else if (cmbTabla.getSelectedIndex() == 3) {//Medicina
+                        codigo = txtId.getText();
+                        insertarDato.buscarMedicina(codigo);
+                        llave = true;
+                    } else if (cmbTabla.getSelectedIndex() == 4) {//Libreria
+                        codigo = txtId.getText();
+                        insertarDato.buscarLibreria(codigo);
+                        llave = true;
+                    }
+                    if (llave == false){
+                        JOptionPane.showMessageDialog(null, "Jugo no encontrado","MENSAJE DE ERROR",JOptionPane.ERROR_MESSAGE);
+                    }
+                    llave = false;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA "+e);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Favor ingrese el id a buscar", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
+
+    private void chkBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkBuscarActionPerformed
+        if(chkBuscar.isSelected()){
+            txtId.setEditable(true);
+            txtId.requestFocus();
+            btnBuscar.setEnabled(true);
+            txtNombre.setEnabled(false);
+            txtCantidad.setEnabled(false);
+            txtPrecio.setEnabled(false);
+            btnInsertar.setEnabled(false);
+        } else {
+            txtId.setEditable(false);
+            btnBuscar.setEnabled(false);
+            txtNombre.setEnabled(true);
+            txtCantidad.setEnabled(true);
+            txtPrecio.setEnabled(true);
+            btnInsertar.setEnabled(true);
+        }
+    }//GEN-LAST:event_chkBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,8 +465,8 @@ public class Inventario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnInsertar;
+    private javax.swing.JCheckBox chkBuscar;
     private javax.swing.JComboBox<String> cmbTabla;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;

@@ -64,11 +64,7 @@
                                   <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtCantidad" alignment="0" max="32767" attributes="0"/>
                                   <Component id="txtPrecio" alignment="0" pref="195" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="txtId" min="-2" pref="92" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnIngresar" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="txtId" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="28" max="32767" attributes="0"/>
                               <Component id="cmbTabla" min="-2" max="-2" attributes="0"/>
@@ -81,8 +77,11 @@
                       <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
-                      <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkBuscar" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -94,7 +93,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbTabla" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
@@ -115,8 +113,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnInsertar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="chkBuscar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="210" max="32767" attributes="0"/>
+                      <EmptySpace pref="184" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -189,17 +189,18 @@
             <Component class="javax.swing.JButton" name="btnBuscar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Buscar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnIngresar">
+            <Component class="javax.swing.JCheckBox" name="chkBuscar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ingresar id"/>
+                <Property name="text" type="java.lang.String" value="Buscar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIngresarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkBuscarActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
