@@ -7,18 +7,34 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Inventario extends javax.swing.JFrame {
+
     public Inventario() {
         initComponents();
     }
-    
+
     double iva, precioIva, dineroTotal, cantidad;
-    int contador=0, datoTabla, numeroDato;
-    String contadorS="", ivaS, precioIvaS, dineroTotalS, dato, codigo;
+    int contador = 0, datoTabla, numeroDato;
+    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo;
     boolean error = false, llave = false;
-    ResultSet rs=null;
+    ResultSet rs = null;
     InsertarDatos insertarDato = new InsertarDatos();
-    
-    
+
+    public void calculos() {
+        double precio;
+        precio = Double.parseDouble(txtPrecio.getText());
+        iva = precio * 0.13;
+        ivaS = iva + "";
+        //calculo del precio_con_iva/unidad
+        //proviene de sumar el precio sin iva + el iva
+        precioIva = precio + iva;
+        precioIvaS = precioIva + "";
+        //Calculo del dinero Total
+        //proviene de multiplicar el costo unitario * cantidad de unidades (sin iva)
+        cantidad = Double.parseDouble(txtCantidad.getText());
+        dineroTotal = cantidad * precio;
+        dineroTotalS = dineroTotal + "";
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +59,9 @@ public class Inventario extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         chkBuscar = new javax.swing.JCheckBox();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -100,6 +119,20 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
 
+        btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setEnabled(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -107,30 +140,40 @@ public class Inventario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(cmbTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInsertar)))
+                        .addComponent(btnInsertar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(35, 35, 35)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnBuscar)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(btnModificar)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(btnActualizar))
+                                    .addComponent(chkBuscar))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbTabla, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnEliminar)
+                                .addGap(98, 98, 98)))))
                 .addGap(74, 74, 74))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar)
-                    .addComponent(chkBuscar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,7 +200,11 @@ public class Inventario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chkBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnActualizar))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
 
@@ -182,7 +229,7 @@ public class Inventario extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,21 +266,7 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        //calculo del iva 
-        //proviene de multiplicar el precio * el porcentaje del iva(13%)
-        double precio;
-        precio = Double.parseDouble(txtPrecio.getText());
-        iva = precio * 0.13;
-        ivaS = iva + "";
-        //calculo del precio_con_iva/unidad
-        //proviene de sumar el precio sin iva + el iva
-        precioIva = precio + iva;
-        precioIvaS = precioIva + "";
-        //Calculo del dinero Total
-        //proviene de multiplicar el costo unitario * cantidad de unidades (sin iva)
-        cantidad = Double.parseDouble(txtCantidad.getText());
-        dineroTotal = cantidad * precio;
-        dineroTotalS = dineroTotal + "";
+        calculos();
 
         //Obtener la informacion de la tabla a la cual insertar los datos e insertar los datos
         if (cmbTabla.getSelectedIndex() == 1) { //bebidas
@@ -362,7 +395,7 @@ public class Inventario extends javax.swing.JFrame {
             txtPrecio.setText("");
             txtNombre.requestFocus();
         }
-        
+
     }//GEN-LAST:event_cmbTablaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -390,13 +423,13 @@ public class Inventario extends javax.swing.JFrame {
                         insertarDato.buscarLibreria(codigo);
                         llave = true;
                     }
-                    if (llave == false){
-                        JOptionPane.showMessageDialog(null, "Jugo no encontrado","MENSAJE DE ERROR",JOptionPane.ERROR_MESSAGE);
+                    if (llave == false) {
+                        JOptionPane.showMessageDialog(null, "Jugo no encontrado", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                     llave = false;
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA "+e);
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
             }
 
         } else {
@@ -410,7 +443,7 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void chkBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkBuscarActionPerformed
-        if(chkBuscar.isSelected()){
+        if (chkBuscar.isSelected()) {
             txtId.setEditable(true);
             txtId.requestFocus();
             btnBuscar.setEnabled(true);
@@ -418,6 +451,9 @@ public class Inventario extends javax.swing.JFrame {
             txtCantidad.setEnabled(false);
             txtPrecio.setEnabled(false);
             btnInsertar.setEnabled(false);
+            btnModificar.setEnabled(true);
+            btnActualizar.setEnabled(true);
+            btnEliminar.setEnabled(true);
         } else {
             txtId.setEditable(false);
             btnBuscar.setEnabled(false);
@@ -425,8 +461,25 @@ public class Inventario extends javax.swing.JFrame {
             txtCantidad.setEnabled(true);
             txtPrecio.setEnabled(true);
             btnInsertar.setEnabled(true);
+            btnModificar.setEnabled(false);
+            btnActualizar.setEnabled(false);
+            btnEliminar.setEnabled(false);
         }
     }//GEN-LAST:event_chkBuscarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+
+        if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCantidad.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campos vacios", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            insertarDato.modificarBebidas(txtId.getText(), txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
+            calculos();
+            JOptionPane.showMessageDialog(null,"Datos actualizados","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -464,8 +517,11 @@ public class Inventario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JCheckBox chkBuscar;
     private javax.swing.JComboBox<String> cmbTabla;
     private javax.swing.JComboBox<String> jComboBox1;
