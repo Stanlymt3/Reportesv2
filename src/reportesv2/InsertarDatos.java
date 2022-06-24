@@ -56,8 +56,8 @@ public class InsertarDatos {
     }
     //Metodo Eliminar 
     
-    public void eliminar(String Tabla, String Numero){
-        cn.UID("DELETE FROM"+Tabla+" WHERE Numero='"+Numero+"'");    
+    public void eliminar(String Tabla, String codigo){
+        cn.UID("DELETE FROM "+Tabla+" WHERE Numero='"+codigo+"'");    
     }
     
 }

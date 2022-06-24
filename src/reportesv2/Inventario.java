@@ -35,6 +35,18 @@ public class Inventario extends javax.swing.JFrame {
         dineroTotalS = dineroTotal + "";
 
     }
+    
+    public void limpiarEliminar(){
+        txtId.setText("");
+        txtId.setEnabled(true);
+        txtNombre.setText("");
+        txtNombre.setEnabled(false);
+        txtCantidad.setText("");
+        txtCantidad.setEnabled(false);
+        txtPrecio.setText("");
+        txtPrecio.setEnabled(false);
+        txtId.requestFocus();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -520,24 +532,41 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCantidad.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Campos vacios", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
-
-        } else {
+        if (!txtId.getText().isEmpty()) {
+            codigo = this.txtId.getText();
             if (cmbTabla.getSelectedIndex() == 1) {//bebidas
-                Tabla = "bebidas";
-                String num = this.txtId.getText();
-                insertarDato.eliminar(Tabla, num);
-
+                if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
+                    Tabla = "bebidas";
+                    insertarDato.eliminar(Tabla, codigo);
+                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    limpiarEliminar();
+                }
             } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
-
+                if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
+                    Tabla = "Abarrotes";
+                    insertarDato.eliminar(Tabla, codigo);
+                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    limpiarEliminar();
+                }
             } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
-
+                if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
+                    Tabla = "Medicina";
+                    insertarDato.eliminar(Tabla, codigo);
+                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    limpiarEliminar();
+                }
             } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
-
+                if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
+                    Tabla = "Libreria";
+                    insertarDato.eliminar(Tabla, codigo);
+                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    limpiarEliminar();
+                }
             }
-
         }
+            
+
+        
 
 
     }//GEN-LAST:event_btnEliminarActionPerformed
