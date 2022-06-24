@@ -5,12 +5,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 public class Inventario extends javax.swing.JFrame {
-
+    
+    DefaultTableModel modelo;
     public Inventario() {
         initComponents();
         setLocationRelativeTo(null);
+        modelo= new DefaultTableModel();
+        modelo.addColumn("Numero");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Precio sin Iva");
+        modelo.addColumn("Iva");
+        modelo.addColumn("Precio con Iva");
+        modelo.addColumn("Dinero Total");
+        this.tblRegistros.setModel(modelo);
     }
 
     double iva, precioIva, dineroTotal, cantidad;
@@ -97,6 +108,7 @@ public class Inventario extends javax.swing.JFrame {
         lblDinero = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRegistros = new javax.swing.JTable();
         btnRegistro = new javax.swing.JButton();
@@ -339,8 +351,20 @@ public class Inventario extends javax.swing.JFrame {
         lblDinero.setText("Valor del dinero total");
 
         jButton1.setText("Agregar Registro");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Agregar toda la categoria");
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -381,9 +405,10 @@ public class Inventario extends javax.swing.JFrame {
                                             .addComponent(lblDinero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscarId, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarNombre))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBuscarId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBuscarNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
         );
         jPanel3Layout.setVerticalGroup(
@@ -404,7 +429,9 @@ public class Inventario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(txtBuscarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBuscarCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLimpiar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -814,7 +841,7 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnSalirActionPerformed
 
     private void btnTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablaActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnTablaActionPerformed
 
     private void btnBuscarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIdActionPerformed
@@ -842,6 +869,9 @@ public class Inventario extends javax.swing.JFrame {
                         this.txtBuscarNombre.setText(rt.getString(2));
                         this.txtBuscarCantidad.setText(rt.getString(3));
                         this.txtBuscarPrecio.setText(rt.getString(4));
+                        this.lblIva.setText(rt.getString(5));
+                        this.lblPrecio.setText(rt.getString(6));
+                        this.lblDinero.setText(rt.getString(7));
                     }
                 }
             } catch (Exception e) {
@@ -876,6 +906,9 @@ public class Inventario extends javax.swing.JFrame {
                         this.txtBuscarId.setText(rt.getString(1));
                         this.txtBuscarCantidad.setText(rt.getString(3));
                         this.txtBuscarPrecio.setText(rt.getString(4));
+                        this.lblIva.setText(rt.getString(5));
+                        this.lblPrecio.setText(rt.getString(6));
+                        this.lblDinero.setText(rt.getString(7));
                     }
                 }
             } catch (Exception e) {
@@ -884,6 +917,39 @@ public class Inventario extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnBuscarNombreActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtBuscarId.setText(" ");
+        txtBuscarNombre.setText(" ");
+        txtBuscarPrecio.setText(" ");
+        txtBuscarCantidad.setText(" ");
+        lblIva.setText("Valor del iva");
+        lblPrecio.setText("Valor del precio con iva agregado");
+        lblDinero.setText("Valor del dinero total");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String [] datos = new String [8];
+        datos [0]=txtBuscarId.getText();
+        datos [1]=txtBuscarNombre.getText();
+        datos [2]=txtBuscarNombre.getText();
+        datos [3]=txtBuscarCantidad.getText();
+        datos [4]=txtBuscarPrecio.getText();
+        datos [5]=lblIva.getText();
+        datos [6]=lblPrecio.getText();
+        datos [7]=lblDinero.getText(); 
+        
+        
+        txtBuscarId.setText(" ");
+//        txtBuscarNombre.setText(" ");
+        txtBuscarNombre.setText(" ");
+        txtBuscarCantidad.setText(" ");
+        txtBuscarPrecio.setText(" ");
+        lblDinero.setText(" ");
+        lblIva.setText(" ");
+        lblPrecio.setText(" ");
+       modelo.addRow(datos);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -930,6 +996,7 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInforme;
     private javax.swing.JButton btnInsertar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPrimero;
     private javax.swing.JButton btnRegistro;
