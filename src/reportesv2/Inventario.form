@@ -64,7 +64,7 @@
                                   <Component id="txtCantidad" max="32767" attributes="0"/>
                                   <Component id="txtPrecio" pref="195" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="89" max="32767" attributes="0"/>
+                              <EmptySpace pref="28" max="32767" attributes="0"/>
                               <Component id="cmbTabla" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -138,11 +138,12 @@
             <Component class="javax.swing.JComboBox" name="cmbTabla">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Bebidas"/>
-                    <StringItem index="1" value="Abarrotes"/>
-                    <StringItem index="2" value="Medicina"/>
-                    <StringItem index="3" value="Libreria"/>
+                  <StringArray count="5">
+                    <StringItem index="0" value="Seleccionar categoria"/>
+                    <StringItem index="1" value="Bebidas"/>
+                    <StringItem index="2" value="Abarrotes"/>
+                    <StringItem index="3" value="Medicina"/>
+                    <StringItem index="4" value="Libreria"/>
                   </StringArray>
                 </Property>
               </Properties>
