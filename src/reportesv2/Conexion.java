@@ -9,10 +9,9 @@ import java.sql.SQLException;
 
 
 public class Conexion {
-    private final String url="jdbc:mysql://bkjemzmxcoa1eelwlf6j-mysql.services.clever-cloud.com:3306/bkjemzmxcoa1eelwlf6j";
-    private final String login="udv0mxxkekbzv4rz";
-    private final String password="OIEIxuowHTQhM8O3S7Jr";
-    private final String puerto = "3306";
+    private final String url="jdbc:mysql://localhost:3306/inventario?characterEncoding=utf8";
+    private final String login="root";
+    private final String password="12345678";
     private Connection cnx=null;
     private Statement sttm=null;
     private ResultSet rst=null;
