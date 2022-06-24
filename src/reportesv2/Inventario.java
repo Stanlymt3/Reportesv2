@@ -14,8 +14,10 @@ public class Inventario extends javax.swing.JFrame {
     double iva, precioIva, dineroTotal, cantidad;
     int contador=0, datoTabla, numeroDato;
     String contadorS="", ivaS, precioIvaS, dineroTotalS, dato;
+    boolean error = false;
     ResultSet rs=null;
     InsertarDatos insertarDato = new InsertarDatos();
+    
     
 
     /**
@@ -37,6 +39,10 @@ public class Inventario extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         btnInsertar = new javax.swing.JButton();
         cmbTabla = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -70,6 +76,29 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Id");
+
+        txtId.setEditable(false);
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnIngresar.setText("Ingresar id");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -81,38 +110,54 @@ public class Inventario extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addGap(35, 35, 35)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombre)
-                            .addComponent(txtCantidad)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(cmbTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnInsertar)))
                 .addGap(74, 74, 74))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(158, 158, 158)
+                .addComponent(btnBuscar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(69, 69, 69)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIngresar)
                     .addComponent(cmbTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInsertar)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
+                .addContainerGap(210, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar", jPanel2);
@@ -173,13 +218,9 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-//        rs = insertarDato.contarRegistrosBebidas();
-//        JOptionPane.showMessageDialog(null, " rs: "+rs);
-        
         if (cmbTabla.getSelectedIndex() == 1) { //opcion bebidas
             try {
                 rs = insertarDato.contarRegistrosBebidas();
-                JOptionPane.showMessageDialog(null, " rs: " + rs);
                 while (rs.next()) {
                     contador = rs.getInt(1);
                     if (contador != 0) {
@@ -245,27 +286,28 @@ public class Inventario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
             }
         }
-        
+
         //calculo del iva 
         //proviene de multiplicar el precio * el porcentaje del iva(13%)
         double precio;
         precio = Double.parseDouble(txtPrecio.getText());
-        iva = precio*0.13;
-        ivaS= iva+"";
+        iva = precio * 0.13;
+        ivaS = iva + "";
         //calculo del precio_con_iva/unidad
         //proviene de sumar el precio sin iva + el iva
-        precioIva=precio+iva;
-        precioIvaS = precioIva+"";
+        precioIva = precio + iva;
+        precioIvaS = precioIva + "";
         //Calculo del dinero Total
         //proviene de multiplicar el costo unitario * cantidad de unidades (sin iva)
         cantidad = Double.parseDouble(txtCantidad.getText());
-        dineroTotal = cantidad*precio;
-        dineroTotalS=dineroTotal+"";
-        
-        //Obtener la informacion de la tabla a la cual insertar los datos
+        dineroTotal = cantidad * precio;
+        dineroTotalS = dineroTotal + "";
+
+        //Obtener la informacion de la tabla a la cual insertar los datos e insertar los datos
         if (cmbTabla.getSelectedIndex() == 1) { //bebidas
             insertarDato.insertarBebida(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
+            error = false;
             txtNombre.setText("");
             txtCantidad.setText("");
             txtPrecio.setText("");
@@ -277,6 +319,7 @@ public class Inventario extends javax.swing.JFrame {
             txtCantidad.setText("");
             txtPrecio.setText("");
             txtNombre.requestFocus();
+            error = false;
         } else if (cmbTabla.getSelectedIndex() == 3) { //medicina
             insertarDato.insertarMedicina(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
@@ -284,6 +327,7 @@ public class Inventario extends javax.swing.JFrame {
             txtCantidad.setText("");
             txtPrecio.setText("");
             txtNombre.requestFocus();
+            error = false;
         } else if (cmbTabla.getSelectedIndex() == 4) { // Libreria
             insertarDato.insertarLibreria(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
@@ -291,17 +335,35 @@ public class Inventario extends javax.swing.JFrame {
             txtCantidad.setText("");
             txtPrecio.setText("");
             txtNombre.requestFocus();
+            error = false;
         } else if (cmbTabla.getSelectedIndex() == 0) { //opcion default
             JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
+            error = true;
         }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void cmbTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTablaActionPerformed
-        txtNombre.setText("");
-        txtCantidad.setText("");
-        txtPrecio.setText("");
-        txtNombre.requestFocus();
+        if (error == false) {
+            txtNombre.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            txtNombre.requestFocus();
+        }
+        
     }//GEN-LAST:event_cmbTablaActionPerformed
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        txtId.setEditable(true);
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+        txtId.setEditable(false);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,18 +401,22 @@ public class Inventario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JComboBox<String> cmbTabla;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
