@@ -54,7 +54,7 @@ public class Conexion {
             Class.forName("com.mysql.jdbc.Driver");
             cnx=DriverManager.getConnection(url, login, password);
             sttm=cnx.createStatement();
-            sttm.executeQuery(sql);
+            rst = sttm.executeQuery(sql);
         } catch (ClassNotFoundException c) {
             JOptionPane.showMessageDialog(null, "ERROR: " + c.getMessage());
             System.exit(1);

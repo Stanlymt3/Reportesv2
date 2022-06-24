@@ -1,5 +1,7 @@
 package reportesv2;
 
+import java.sql.ResultSet;
+
 public class InsertarDatos {
     Conexion cn = new Conexion();
     
@@ -20,4 +22,9 @@ public class InsertarDatos {
         cn.UID("INSERT INTO Libreria(Numero, Nombre_del_Producto, Cantidad, Precio_sin_iva, Iva, Precio_con_iva, Dinero_total) VALUES "
                 + "('"+Numero+"','"+Nombre_del_producto+"','"+Cantidad+"','"+Precio_sin_iva+"','"+Iva+"','"+Precio_con_iva+"','"+Dinero_total+"')");
     }
+    
+    public ResultSet contarRegistrosBebidas() {
+        return (cn.getValores("SELECT COUNT(*) FROM bebidas"));
+    }
+    
 }

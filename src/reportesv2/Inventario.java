@@ -13,8 +13,8 @@ public class Inventario extends javax.swing.JFrame {
     
     double iva, precioIva, dineroTotal, cantidad;
     int contador=0, datoTabla, numeroDato;
-    String contadorS, ivaS, precioIvaS, dineroTotalS, dato;
-    ResultSet rs;
+    String contadorS="", ivaS, precioIvaS, dineroTotalS, dato;
+    ResultSet rs=null;
     InsertarDatos insertarDato = new InsertarDatos();
     
 
@@ -168,16 +168,28 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        rs = null;
-        rs = insertarDato.contarRegistrosBebidas();
+//        rs = insertarDato.contarRegistrosBebidas();
+//        JOptionPane.showMessageDialog(null, " rs: "+rs);
         try {
+            rs = insertarDato.contarRegistrosBebidas();
+            JOptionPane.showMessageDialog(null, " rs: " + rs);
             while (rs.next()) {
-                contador = rs.getInt(1)+1;
-                contadorS = contador+"";
+                contador = rs.getInt(1);
+                if (contador != 0) {
+                    contador = rs.getInt(1) + 1;
+                    contadorS = contador + "";
+                } else {
+                    contador = 1;
+                    contadorS = contador + "";
+                }
             }
+//            if (rs.next()) {
+//                contador = rs.getInt(1) + 1;
+//                JOptionPane.showMessageDialog(null, " rs: "+rs);
+//                contadorS = contador + "";
+//            }
         } catch (Exception e) {
-            contador = 1;
-            contadorS = contador + "";
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
         }
         //calculo del iva 
         //proviene de multiplicar el precio * el porcentaje del iva(13%)
