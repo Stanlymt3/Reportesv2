@@ -485,6 +485,11 @@ public class Inventario extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblRegistros);
 
         btnRegistro.setText("Limpiar registro");
+        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistroActionPerformed(evt);
+            }
+        });
 
         btnTabla.setText("Limpiar Tabla");
         btnTabla.addActionListener(new java.awt.event.ActionListener() {
@@ -496,12 +501,32 @@ public class Inventario extends javax.swing.JFrame {
         btnInforme.setText("Imprimir Informe");
 
         btnPrimero.setText("Ir al primero");
+        btnPrimero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrimeroActionPerformed(evt);
+            }
+        });
 
         btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         btnUltimo.setText("Ir al ultimo");
+        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimoActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -1018,6 +1043,36 @@ public class Inventario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
         }
     }//GEN-LAST:event_btnAgregarTodoActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        int lugar;
+        lugar=tblRegistros.getSelectedRow();
+        lugar = lugar + 1;
+        tblRegistros.changeSelection(lugar, lugar, false, false);
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        int lugar;
+        lugar=tblRegistros.getSelectedRow();
+        lugar = lugar - 1;
+        tblRegistros.changeSelection(lugar, lugar, false, false);
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
+        tblRegistros.changeSelection(0, 0, false, false);
+    }//GEN-LAST:event_btnPrimeroActionPerformed
+
+    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
+        int lugar ;
+        lugar = tblRegistros.getRowCount();
+        lugar = lugar - 1;
+         tblRegistros.changeSelection(lugar, lugar, false, false);
+    }//GEN-LAST:event_btnUltimoActionPerformed
+
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel) tblRegistros.getModel();
+        dtm.removeRow(tblRegistros.getSelectedRow());
+    }//GEN-LAST:event_btnRegistroActionPerformed
 
     /**
      * @param args the command line arguments
