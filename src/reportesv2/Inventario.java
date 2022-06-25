@@ -211,8 +211,8 @@ public class Inventario extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRegistros = new javax.swing.JTable();
-        btnRegistro = new javax.swing.JButton();
-        btnTabla = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
+        btnCleanTabla = new javax.swing.JButton();
         btnInforme = new javax.swing.JButton();
         btnPrimero = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
@@ -584,24 +584,49 @@ public class Inventario extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblRegistros);
 
-        btnRegistro.setText("Limpiar registro");
-
-        btnTabla.setText("Limpiar Tabla");
-        btnTabla.addActionListener(new java.awt.event.ActionListener() {
+        btnClean.setText("Limpiar registro");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTablaActionPerformed(evt);
+                btnCleanActionPerformed(evt);
+            }
+        });
+
+        btnCleanTabla.setText("Limpiar Tabla");
+        btnCleanTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanTablaActionPerformed(evt);
             }
         });
 
         btnInforme.setText("Imprimir Informe");
 
         btnPrimero.setText("Ir al primero");
+        btnPrimero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrimeroActionPerformed(evt);
+            }
+        });
 
         btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         btnUltimo.setText("Ir al ultimo");
+        btnUltimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimoActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -617,9 +642,9 @@ public class Inventario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnClean, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(btnTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCleanTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(359, 359, 359)
                         .addComponent(btnInforme))
                     .addGroup(layout.createSequentialGroup()
@@ -649,8 +674,8 @@ public class Inventario extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClean, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCleanTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -952,9 +977,17 @@ public class Inventario extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_BtnSalirActionPerformed
 
-    private void btnTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTablaActionPerformed
-       
-    }//GEN-LAST:event_btnTablaActionPerformed
+    private void btnCleanTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanTablaActionPerformed
+       try {
+            DefaultTableModel modelo=(DefaultTableModel) tblRegistros.getModel();
+            int filas=tblRegistros.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }//GEN-LAST:event_btnCleanTablaActionPerformed
 
     private void btnBuscarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIdActionPerformed
         codigo = txtBuscarId.getText();
@@ -1078,6 +1111,36 @@ public class Inventario extends javax.swing.JFrame {
         agregar();
     }//GEN-LAST:event_btnAgregarTodoActionPerformed
 
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        int lugar;
+        lugar=tblRegistros.getSelectedRow();
+        lugar = lugar + 1;
+        tblRegistros.changeSelection(lugar, lugar, false, false);
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        int lugar;
+        lugar=tblRegistros.getSelectedRow();
+        lugar = lugar - 1;
+        tblRegistros.changeSelection(lugar, lugar, false, false);
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
+        tblRegistros.changeSelection(0, 0, false, false);
+    }//GEN-LAST:event_btnPrimeroActionPerformed
+
+    private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
+        int lugar ;
+        lugar = tblRegistros.getRowCount();
+        lugar = lugar - 1;
+         tblRegistros.changeSelection(lugar, lugar, false, false);
+    }//GEN-LAST:event_btnUltimoActionPerformed
+
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel) tblRegistros.getModel();
+        dtm.removeRow(tblRegistros.getSelectedRow());
+    }//GEN-LAST:event_btnCleanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1122,15 +1185,15 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarId;
     private javax.swing.JButton btnBuscarNombre;
+    private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnCleanTabla;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInforme;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnPrimero;
-    private javax.swing.JButton btnRegistro;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton btnTabla;
     private javax.swing.JToggleButton btnUltimo;
     private javax.swing.JCheckBox chkBuscar;
     private javax.swing.JComboBox<String> cmbRegistro;
