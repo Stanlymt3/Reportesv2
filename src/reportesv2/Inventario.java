@@ -25,12 +25,12 @@ public class Inventario extends javax.swing.JFrame {
     }
 
     double iva, precioIva, dineroTotal, cantidad;
-    int contador = 0, datoTabla, numeroDato;
-    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla,nombre;
+    int contador = 0, datoTabla, numeroDato, identificador, cuenta = 0, u=0;
+    String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla,nombre, cuentaS;
     boolean error = false, llave = false, buscar = false;
     ResultSet rs = null, rt = null, rn = null, ru=null;
     InsertarDatos insertarDato = new InsertarDatos();
-
+    
     public void calculos() {
         double precio;
         precio = Double.parseDouble(txtPrecio.getText());
@@ -46,6 +46,106 @@ public class Inventario extends javax.swing.JFrame {
         dineroTotal = cantidad * precio;
         dineroTotalS = dineroTotal + "";
 
+    }
+     public void setId (){
+        contador = contador + 1;
+        contadorS = contador+"";
+        identificador = 1;
+        txtBuscarId.setText(contadorS);
+    }
+     
+    public void setDatos (){
+        codigo = txtBuscarId.getText();
+        if (cmbRegistro.getSelectedIndex() == 1) {//bebidas
+            Tabla = "bebidas";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
+            Tabla = "Abarrotes";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbRegistro.getSelectedIndex() == 3) {//medicina
+            Tabla = "Medicina";
+            rt = insertarDato.buscar(Tabla, codigo);
+        } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
+            Tabla = "Libreria";
+            rt = insertarDato.buscar(Tabla, codigo);
+        }else if (cmbRegistro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "seleccione una categoria");
+        }
+
+        if (rt != null) {
+            try {
+                while (rt.next()) {
+                    if (cmbRegistro.getSelectedIndex() != 0) {
+                        this.txtBuscarNombre.setText(rt.getString(2));
+                        this.txtBuscarCantidad.setText(rt.getString(3));
+                        this.txtBuscarPrecio.setText(rt.getString(4));
+                        this.lblIva.setText(rt.getString(5));
+                        this.lblPrecio.setText(rt.getString(6));
+                        this.lblDinero.setText(rt.getString(7));
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+            }
+        }
+    }
+    public void agregar (){
+        if (cuenta == 0) {
+            cuenta = 1;
+            cuentaS = cuenta + "";
+        } else {
+            cuenta = cuenta + 1;
+            cuentaS = cuenta + "";
+        }
+
+        String[] datos = new String[8];
+        datos[0] = cuentaS;
+        datos[1] = cmbRegistro.getItemAt(cmbRegistro.getSelectedIndex());
+        datos[2] = txtBuscarNombre.getText();
+        datos[3] = txtBuscarCantidad.getText();
+        datos[4] = txtBuscarPrecio.getText();
+        datos[5] = lblIva.getText();
+        datos[6] = lblPrecio.getText();
+        datos[7] = lblDinero.getText();
+
+        txtBuscarId.setText(" ");
+        txtBuscarNombre.setText(" ");
+        txtBuscarCantidad.setText(" ");
+        txtBuscarPrecio.setText(" ");
+        lblDinero.setText(" ");
+        lblIva.setText(" ");
+        lblPrecio.setText(" ");
+        modelo.addRow(datos);
+    }
+    
+    public void establecer (){
+         if (rt != null) {
+                try {
+                    while (rt.next()) {
+                        if (cmbRegistro.getSelectedIndex() != 0) {
+                            this.txtBuscarId.setText(rt.getString(1));
+                            this.txtBuscarNombre.setText(rt.getString(2));
+                            this.txtBuscarCantidad.setText(rt.getString(3));
+                            this.txtBuscarPrecio.setText(rt.getString(4));
+                            this.lblIva.setText(rt.getString(5));
+                            this.lblPrecio.setText(rt.getString(6));
+                            this.lblDinero.setText(rt.getString(7));
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+                }
+            }
+
+            String[] datos = new String[8];
+            datos[0] = cuentaS;
+            datos[1] = cmbRegistro.getItemAt(cmbRegistro.getSelectedIndex());
+            datos[2] = txtBuscarNombre.getText();
+            datos[3] = txtBuscarCantidad.getText();
+            datos[4] = txtBuscarPrecio.getText();
+            datos[5] = lblIva.getText();
+            datos[6] = lblPrecio.getText();
+            datos[7] = lblDinero.getText();
     }
     
     public void limpiarEliminar(){
@@ -940,10 +1040,8 @@ public class Inventario extends javax.swing.JFrame {
         lblDinero.setText("Valor del dinero total");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    int cuenta=0;
-    String cuentaS;
+    
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-
         if (cuenta == 0) {
             cuenta = 1;
             cuentaS = cuenta + "";
@@ -973,50 +1071,11 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAgregarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTodoActionPerformed
-        try {
-            if (cmbRegistro.getSelectedIndex() == 1) {//bebidas
-                Tabla = "bebidas";
-                rt = insertarDato.contarRegistrosT(Tabla);
-            } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
-                Tabla = "Abarrotes";
-                rt = insertarDato.contarRegistrosT(Tabla);
-            } else if (cmbRegistro.getSelectedIndex() == 3) {//medicina
-                Tabla = "Medicina";
-                rt = insertarDato.contarRegistrosT(Tabla);
-            } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
-                Tabla = "Libreria";
-                rt = insertarDato.contarRegistrosT(Tabla);
-            } else if (cmbRegistro.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(null, "seleccione una categoria");
-            }
-
-            for (int i = 0; i <= 8; i++) {
-                for (int j = 0; j < insertarDato.contarRegistrosT(Tabla).getInt(1); j++) {
-                    if (cuenta == 0) {
-                        cuenta = 1;
-                        cuentaS = cuenta + "";
-                    } else {
-                        cuenta = cuenta + 1;
-                        cuentaS = cuenta + "";
-                    }
-
-                    ru = insertarDato.buscar(Tabla, cuentaS);
-
-                    String[] datos = new String[8];
-                    datos[0] = cuentaS;
-                    datos[1] = cmbRegistro.getItemAt(cmbRegistro.getSelectedIndex());
-                    datos[2] = this.ru.getString(2);
-                    datos[3] = this.ru.getString(3);
-                    datos[4] = this.ru.getString(4);
-                    datos[5] = this.ru.getString(5);
-                    datos[6] = this.ru.getString(6);
-                    datos[7] = this.ru.getString(7);
-                }
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+        setId();
+        if (identificador == 1) {
+            setDatos();
         }
+        agregar();
     }//GEN-LAST:event_btnAgregarTodoActionPerformed
 
     /**

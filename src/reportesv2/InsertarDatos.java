@@ -44,6 +44,9 @@ public class InsertarDatos {
         return (cn.getValores("SELECT COUNT(*) FROM Libreria"));
     }
 
+    public ResultSet contar(String Tabla) {
+        return (cn.getValores("SELECT COUNT(*) FROM '"+Tabla+"'"));
+    }
     //Metodos Buscar
     public ResultSet buscar(String Tabla, String codigo) {
         return (cn.getValores("SELECT * FROM " + Tabla + " WHERE Numero='" + codigo + "'"));
