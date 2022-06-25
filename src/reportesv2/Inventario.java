@@ -973,7 +973,55 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAgregarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTodoActionPerformed
-        // TODO add your handling code here:
+        if (cmbRegistro.getSelectedIndex() == 1) {//bebidas
+            Tabla = "bebidas";
+            rt = insertarDato.contarRegistrosT(Tabla);
+        } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
+            Tabla = "Abarrotes";
+            rt = insertarDato.contarRegistrosT(Tabla);
+        } else if (cmbRegistro.getSelectedIndex() == 3) {//medicina
+            Tabla = "Medicina";
+            rt = insertarDato.contarRegistrosT(Tabla);
+        } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
+            Tabla = "Libreria";
+            rt = insertarDato.contarRegistrosT(Tabla);
+        } else if (cmbRegistro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "seleccione una categoria");
+        }
+        if (rt != null) {
+
+            try {
+
+                for (int i = 0; i <= 8; i++) {
+                    for (int j = 0; j < insertarDato.contarRegistrosT(Tabla).getInt(1); j++) {
+                        if (cuenta == 0) {
+                            cuenta = 1;
+                            cuentaS = cuenta + "";
+                        } else {
+                            cuenta = cuenta + 1;
+                            cuentaS = cuenta + "";
+                        }
+
+                        String[] datos = new String[8];
+                        datos[0] = cuentaS;
+                        datos[1] = cmbRegistro.getItemAt(cmbRegistro.getSelectedIndex());
+                        datos[2] = txtBuscarNombre.getText();
+                        datos[3] = txtBuscarCantidad.getText();
+                        datos[4] = txtBuscarPrecio.getText();
+                        datos[5] = lblIva.getText();
+                        datos[6] = lblPrecio.getText();
+                        datos[7] = lblDinero.getText();
+
+                    }
+
+                }
+
+            } catch (Exception e) {
+            }
+
+        }
+
+
     }//GEN-LAST:event_btnAgregarTodoActionPerformed
 
     /**

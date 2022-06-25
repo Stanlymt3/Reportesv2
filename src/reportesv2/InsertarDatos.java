@@ -63,4 +63,8 @@ public class InsertarDatos {
     public ResultSet buscarNombre(String Tabla, String nombre) {
         return (cn.getValores("SELECT * FROM " + Tabla + " WHERE Nombre_del_Producto='" + nombre + "'"));
     }
+    
+    public ResultSet contarRegistrosT(String Tabla) {
+        return (cn.getValores("SELECT COUNT(*) FROM "+Tabla ));
+    }
 }
