@@ -28,7 +28,7 @@ public class Inventario extends javax.swing.JFrame {
     int contador = 0, datoTabla, numeroDato, identificador, cuenta = 0, u=0;
     String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla,nombre, cuentaS;
     boolean error = false, llave = false, buscar = false;
-    ResultSet rs = null, rt = null, rn = null, ru=null;
+    ResultSet rs = null, rt = null, rn = null, ru;
     InsertarDatos insertarDato = new InsertarDatos();
     
     public void calculos() {
@@ -52,6 +52,20 @@ public class Inventario extends javax.swing.JFrame {
         contadorS = contador+"";
         identificador = 1;
         txtBuscarId.setText(contadorS);
+    }
+    
+    public void setTabla(){
+         if (cmbRegistro.getSelectedIndex() == 1) {//bebidas
+            Tabla = "bebidas";
+        } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
+            Tabla = "Abarrotes";
+        } else if (cmbRegistro.getSelectedIndex() == 3) {//medicina
+            Tabla = "Medicina";
+        } else if (cmbRegistro.getSelectedIndex() == 4) {//libreria
+            Tabla = "Libreria";
+        }else if (cmbRegistro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "seleccione una categoria");
+        }
     }
      
     public void setDatos (){
@@ -1075,40 +1089,28 @@ public class Inventario extends javax.swing.JFrame {
 
     
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (cuenta == 0) {
-            cuenta = 1;
-            cuentaS = cuenta + "";
-        } else {
-            cuenta = cuenta + 1;
-            cuentaS = cuenta + "";
-        }
-
-        String[] datos = new String[8];
-        datos[0] = cuentaS;
-        datos[1] = cmbRegistro.getItemAt(cmbRegistro.getSelectedIndex());
-        datos[2] = txtBuscarNombre.getText();
-        datos[3] = txtBuscarCantidad.getText();
-        datos[4] = txtBuscarPrecio.getText();
-        datos[5] = lblIva.getText();
-        datos[6] = lblPrecio.getText();
-        datos[7] = lblDinero.getText();
-
-        txtBuscarId.setText(" ");
-        txtBuscarNombre.setText(" ");
-        txtBuscarCantidad.setText(" ");
-        txtBuscarPrecio.setText(" ");
-        lblDinero.setText(" ");
-        lblIva.setText(" ");
-        lblPrecio.setText(" ");
-        modelo.addRow(datos);
+        agregar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAgregarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTodoActionPerformed
-        setId();
-        if (identificador == 1) {
-            setDatos();
+        setTabla();
+        ru = insertarDato.buscarNoE(Tabla);
+        try {
+            while (ru.next()) {
+                String[] datos = new String[8];
+                datos[0] = ru.getString(1);
+                datos[1] = Tabla;
+                datos[2] = ru.getString(2);
+                datos[3] = ru.getString(3);
+                datos[4] = ru.getString(4);
+                datos[5] = ru.getString(5);
+                datos[6] = ru.getString(6);
+                datos[7] = ru.getString(7);
+                modelo.addRow(datos);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA "+ex);
         }
-        agregar();
     }//GEN-LAST:event_btnAgregarTodoActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed

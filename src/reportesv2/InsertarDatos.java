@@ -51,6 +51,10 @@ public class InsertarDatos {
     public ResultSet buscar(String Tabla, String codigo) {
         return (cn.getValores("SELECT * FROM " + Tabla + " WHERE Numero='" + codigo + "'"));
     }
+    
+    public ResultSet buscarNoE(String Tabla) {
+        return (cn.getValores("SELECT * FROM " + Tabla )) ;
+    }
 
     //Metodo modificar 
     public void modificar(String Tabla, String Numero, String Nombre_del_producto, String Cantidad, String Precio_sin_iva, String Iva, String Precio_con_iva, String Dinero_total, String codigo) {
