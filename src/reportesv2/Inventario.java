@@ -1,11 +1,20 @@
 package reportesv2;
 
+import com.itextpdf.text.pdf.codec.Base64.InputStream;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Inventario extends javax.swing.JFrame {
     
@@ -23,13 +32,18 @@ public class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Dinero Total");
         this.tblRegistros.setModel(modelo);
     }
-
+    
+    
+    
     double iva, precioIva, dineroTotal, cantidad;
     int contador = 0, datoTabla, numeroDato, identificador, cuenta = 0, u=0;
     String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla,nombre, cuentaS;
     boolean error = false, llave = false, buscar = false;
     ResultSet rs = null, rt = null, rn = null, ru;
     InsertarDatos insertarDato = new InsertarDatos();
+    
+    Conexion cc = new Conexion();
+    Connection con = cc.getConexion();
     
     public void calculos() {
         double precio;
@@ -613,6 +627,11 @@ public class Inventario extends javax.swing.JFrame {
         });
 
         btnInforme.setText("Imprimir Informe");
+        btnInforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformeActionPerformed(evt);
+            }
+        });
 
         btnPrimero.setText("Ir al primero");
         btnPrimero.addActionListener(new java.awt.event.ActionListener() {
@@ -1139,6 +1158,19 @@ public class Inventario extends javax.swing.JFrame {
         DefaultTableModel dtm = (DefaultTableModel) tblRegistros.getModel();
         dtm.removeRow(tblRegistros.getSelectedRow());
     }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
+        try {
+            InputStream archivo = (InputStream) getClass().getResourceAsStream("/src/informes/infBebidas.jrxml");
+            JasperDesign dise = JRXmlLoader.load(archivo);
+            JasperReport jr = JasperCompileManager.compileReport(dise);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
+            JasperViewer.viewReport(jp);
+            JOptionPane.showMessageDialog(null, "Funca");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "NO Funca "+e);
+        }
+    }//GEN-LAST:event_btnInformeActionPerformed
 
     /**
      * @param args the command line arguments
