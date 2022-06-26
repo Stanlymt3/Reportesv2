@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
     private final String url="jdbc:mysql://localhost:3306/inventario?characterEncoding=utf8";
     private final String login="root";
-    private final String password="02011388";
+    private final String password="12345678";
     private Connection cnx=null;
     private Statement sttm=null;
     private ResultSet rst=null;
