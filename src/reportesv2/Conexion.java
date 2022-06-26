@@ -1,11 +1,11 @@
 package reportesv2;
 
 import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 
 public class Conexion {
@@ -78,4 +78,5 @@ public class Conexion {
     public Connection getConexion(){
         return this.cnx;
     }
+    
 }

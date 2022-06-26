@@ -2,11 +2,9 @@ package reportesv2;
 
 import com.itextpdf.text.pdf.codec.Base64.InputStream;
 import java.sql.Connection;
-import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -32,9 +30,6 @@ public class Inventario extends javax.swing.JFrame {
         modelo.addColumn("Dinero Total");
         this.tblRegistros.setModel(modelo);
     }
-    
-    
-    
     double iva, precioIva, dineroTotal, cantidad;
     int contador = 0, datoTabla, numeroDato, identificador, cuenta = 0, u=0;
     String contadorS = "", ivaS, precioIvaS, dineroTotalS, dato, codigo, Tabla,nombre, cuentaS;
@@ -99,23 +94,10 @@ public class Inventario extends javax.swing.JFrame {
         }else if (cmbRegistro.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "seleccione una categoria");
         }
+        
+        cmbSIDX();
 
-        if (rt != null) {
-            try {
-                while (rt.next()) {
-                    if (cmbRegistro.getSelectedIndex() != 0) {
-                        this.txtBuscarNombre.setText(rt.getString(2));
-                        this.txtBuscarCantidad.setText(rt.getString(3));
-                        this.txtBuscarPrecio.setText(rt.getString(4));
-                        this.lblIva.setText(rt.getString(5));
-                        this.lblPrecio.setText(rt.getString(6));
-                        this.lblDinero.setText(rt.getString(7));
-                    }
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
-            }
-        }
+       
     }
     public void agregar (){
         if (cuenta == 0) {
@@ -136,34 +118,13 @@ public class Inventario extends javax.swing.JFrame {
         datos[6] = lblPrecio.getText();
         datos[7] = lblDinero.getText();
 
-        txtBuscarId.setText(" ");
-        txtBuscarNombre.setText(" ");
-        txtBuscarCantidad.setText(" ");
-        txtBuscarPrecio.setText(" ");
-        lblDinero.setText(" ");
-        lblIva.setText(" ");
-        lblPrecio.setText(" ");
+        limpiarCampos();
         modelo.addRow(datos);
     }
     
+    
     public void establecer (){
-         if (rt != null) {
-                try {
-                    while (rt.next()) {
-                        if (cmbRegistro.getSelectedIndex() != 0) {
-                            this.txtBuscarId.setText(rt.getString(1));
-                            this.txtBuscarNombre.setText(rt.getString(2));
-                            this.txtBuscarCantidad.setText(rt.getString(3));
-                            this.txtBuscarPrecio.setText(rt.getString(4));
-                            this.lblIva.setText(rt.getString(5));
-                            this.lblPrecio.setText(rt.getString(6));
-                            this.lblDinero.setText(rt.getString(7));
-                        }
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
-                }
-            }
+         cmbSIDX();
 
             String[] datos = new String[8];
             datos[0] = cuentaS;
@@ -187,6 +148,9 @@ public class Inventario extends javax.swing.JFrame {
         txtPrecio.setEnabled(false);
         txtId.requestFocus();
     }
+    
+  
+            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -262,6 +226,12 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Cantidad:");
+
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Precio sin iva/unidad:");
@@ -722,44 +692,18 @@ public class Inventario extends javax.swing.JFrame {
         //Obtener la informacion de la tabla a la cual insertar los datos e insertar los datos
         if (cmbTabla.getSelectedIndex() == 1) { //bebidas
             insertarDato.insertarBebida(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
-            JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-            error = false;
-            txtNombre.setText("");
-            txtCantidad.setText("");
-            txtPrecio.setText("");
-            txtNombre.requestFocus();
-            int id = Integer.parseInt(txtId.getText()) + 1;
-            txtId.setText(id + "");
+           datosINS();
+            
         } else if (cmbTabla.getSelectedIndex() == 2) { // abarroteria
             insertarDato.insertarAbarrote(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
-            JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-            txtNombre.setText("");
-            txtCantidad.setText("");
-            txtPrecio.setText("");
-            txtNombre.requestFocus();
-            error = false;
-            int id = Integer.parseInt(txtId.getText()) + 1;
-            txtId.setText(id + "");
+           datosINS();
         } else if (cmbTabla.getSelectedIndex() == 3) { //medicina
             insertarDato.insertarMedicina(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
             JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-            txtNombre.setText("");
-            txtCantidad.setText("");
-            txtPrecio.setText("");
-            txtNombre.requestFocus();
-            error = false;
-            int id = Integer.parseInt(txtId.getText()) + 1;
-            txtId.setText(id + "");
+            datosINS();
         } else if (cmbTabla.getSelectedIndex() == 4) { // Libreria
             insertarDato.insertarLibreria(contadorS, txtNombre.getText(), txtCantidad.getText(), txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS);
-            JOptionPane.showMessageDialog(null, "Dato insertado con exito");
-            txtNombre.setText("");
-            txtCantidad.setText("");
-            txtPrecio.setText("");
-            txtNombre.requestFocus();
-            error = false;
-            int id = Integer.parseInt(txtId.getText()) + 1;
-            txtId.setText(id + "");
+            datosINS();
         } else if (cmbTabla.getSelectedIndex() == 0) { //opcion default
             JOptionPane.showMessageDialog(null, "Favor seleccione una categoria", "MENSAJE DE ERROR", JOptionPane.ERROR_MESSAGE);
             error = true;
@@ -940,23 +884,20 @@ public class Inventario extends javax.swing.JFrame {
                 Tabla = "bebidas";
                 calculos();
                 codigo = txtId.getText();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
-                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+               insertarDMod();
             } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
                 Tabla = "Abarrotes";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
-                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                insertarDMod();
             } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
                 Tabla = "Medicina";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
-                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                insertarDMod();
             } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
                 Tabla = "Libreria";
                 calculos();
-                insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
-                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                insertarDMod();
+                
             }
         }
 
@@ -969,22 +910,19 @@ public class Inventario extends javax.swing.JFrame {
             if (cmbTabla.getSelectedIndex() == 1) {//bebidas
                 if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
                     Tabla = "bebidas";
-                    insertarDato.eliminar(Tabla, codigo);
-                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    eliminarTblYCDG();
                     limpiarEliminar();
                 }
             } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
                 if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
                     Tabla = "Abarrotes";
-                    insertarDato.eliminar(Tabla, codigo);
-                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                   eliminarTblYCDG();
                     limpiarEliminar();
                 }
             } else if (cmbTabla.getSelectedIndex() == 3) {//medicina
                 if (JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el dato?") == 0) {
                     Tabla = "Medicina";
-                    insertarDato.eliminar(Tabla, codigo);
-                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+                    eliminarTblYCDG();
                     limpiarEliminar();
                 }
             } else if (cmbTabla.getSelectedIndex() == 4) {//libreria
@@ -997,10 +935,6 @@ public class Inventario extends javax.swing.JFrame {
             }
         }
             
-
-        
-
-
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
@@ -1009,7 +943,6 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnCleanTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanTablaActionPerformed
        try {
-            DefaultTableModel modelo=(DefaultTableModel) tblRegistros.getModel();
             int filas=tblRegistros.getRowCount();
             for (int i = 0;filas>i; i++) {
                 modelo.removeRow(0);
@@ -1094,16 +1027,9 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarNombreActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtBuscarId.setText(" ");
-        txtBuscarNombre.setText(" ");
-        txtBuscarPrecio.setText(" ");
-        txtBuscarCantidad.setText(" ");
-        lblIva.setText("Valor del iva");
-        lblPrecio.setText("Valor del precio con iva agregado");
-        lblDinero.setText("Valor del dinero total");
+        limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         agregar();
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -1151,17 +1077,25 @@ public class Inventario extends javax.swing.JFrame {
         int lugar ;
         lugar = tblRegistros.getRowCount();
         lugar = lugar - 1;
-         tblRegistros.changeSelection(lugar, lugar, false, false);
+        tblRegistros.changeSelection(lugar, lugar, false, false);
     }//GEN-LAST:event_btnUltimoActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         DefaultTableModel dtm = (DefaultTableModel) tblRegistros.getModel();
         dtm.removeRow(tblRegistros.getSelectedRow());
     }//GEN-LAST:event_btnCleanActionPerformed
-
+    public void limpiarCampos() {
+        txtBuscarId.setText(" ");
+        txtBuscarNombre.setText(" ");
+        txtBuscarCantidad.setText(" ");
+        txtBuscarPrecio.setText(" ");
+        lblDinero.setText(" ");
+        lblIva.setText(" ");
+        lblPrecio.setText(" ");
+    }
     private void btnInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeActionPerformed
         try {
-            InputStream archivo = (InputStream) getClass().getResourceAsStream("/src/informes/infBebidas.jrxml");
+            InputStream archivo = (InputStream) getClass().getResourceAsStream("informes/infBebidas.jrxml");
             JasperDesign dise = JRXmlLoader.load(archivo);
             JasperReport jr = JasperCompileManager.compileReport(dise);
             JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
@@ -1171,6 +1105,10 @@ public class Inventario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "NO Funca "+e);
         }
     }//GEN-LAST:event_btnInformeActionPerformed
+
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        
+    }//GEN-LAST:event_txtCantidadKeyPressed
 
     /**
      * @param args the command line arguments
@@ -1206,7 +1144,45 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    public void datosINS(){
+        JOptionPane.showMessageDialog(null, "Dato insertado con exito");
+            error = false;
+            txtNombre.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            txtNombre.requestFocus();
+            int id = Integer.parseInt(txtId.getText()) + 1;
+            txtId.setText(id + "");  
+    }
+    public void insertarDMod(){
+        insertarDato.modificar(Tabla, this.txtId.getText(), this.txtNombre.getText(), this.txtCantidad.getText(), this.txtPrecio.getText(), ivaS, precioIvaS, dineroTotalS, codigo);
+                JOptionPane.showMessageDialog(null, "Dato actualizado con exito", "MENSAJE DE INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public void cmbSIDX(){
+          if (rt != null) {
+            try {
+                while (rt.next()) {
+                    if (cmbRegistro.getSelectedIndex() != 0) {
+                        this.txtBuscarNombre.setText(rt.getString(2));
+                        this.txtBuscarCantidad.setText(rt.getString(3));
+                        this.txtBuscarPrecio.setText(rt.getString(4));
+                        this.lblIva.setText(rt.getString(5));
+                        this.lblPrecio.setText(rt.getString(6));
+                        this.lblDinero.setText(rt.getString(7));
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + e);
+            }
+        }
+        
+    }
+    public void eliminarTblYCDG(){
+        insertarDato.eliminar(Tabla, codigo);
+                    JOptionPane.showMessageDialog(null, "Registro eliminado de forma exitosa","MENSAJE DE INFORMACION",JOptionPane.INFORMATION_MESSAGE);
+    }
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnSalir;
     private javax.swing.JButton btnActualizar;
