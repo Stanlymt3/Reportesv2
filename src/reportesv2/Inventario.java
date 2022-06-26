@@ -723,10 +723,11 @@ public class Inventario extends javax.swing.JFrame {
                                 .addComponent(btnCleanTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 37, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -894,9 +895,9 @@ public class Inventario extends javax.swing.JFrame {
             txtId.setText("");
             txtId.requestFocus();
             btnBuscar.setEnabled(true);
-            txtNombre.setEnabled(false);
-            txtCantidad.setEnabled(false);
-            txtPrecio.setEnabled(false);
+            txtNombre.setEditable(false);
+            txtCantidad.setEditable(false);
+            txtPrecio.setEditable(false);
             btnInsertar.setEnabled(false);
             btnModificar.setEnabled(true);
             btnActualizar.setEnabled(true);
@@ -905,9 +906,9 @@ public class Inventario extends javax.swing.JFrame {
         } else {
             txtId.setEditable(false);
             btnBuscar.setEnabled(false);
-            txtNombre.setEnabled(true);
-            txtCantidad.setEnabled(true);
-            txtPrecio.setEnabled(true);
+            txtNombre.setEditable(true);
+            txtCantidad.setEditable(true);
+            txtPrecio.setEditable(true);
             btnInsertar.setEnabled(true);
             btnModificar.setEnabled(false);
             btnActualizar.setEnabled(false);
