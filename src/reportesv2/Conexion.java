@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-
 public class Conexion {
     private final String url="jdbc:mysql://localhost:3306/inventario?characterEncoding=utf8";
     private final String login="root";

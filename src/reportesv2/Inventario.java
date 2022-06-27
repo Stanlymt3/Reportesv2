@@ -810,7 +810,7 @@ public class Inventario extends javax.swing.JFrame {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(rootPane, e.getMessage(), "AVISO DEL SISTEMA", 0);
                 }
-            } 
+            }
             if (error == false) {
                 txtNombre.setText("");
                 txtCantidad.setText("");
@@ -824,6 +824,7 @@ public class Inventario extends javax.swing.JFrame {
 
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        txtBuscarId.setEditable(true);
         codigo = txtId.getText();
         if (cmbTabla.getSelectedIndex() == 1) {//bebidas
             Tabla = "bebidas";
@@ -883,19 +884,19 @@ public class Inventario extends javax.swing.JFrame {
             btnModificar.setEnabled(false);
             btnActualizar.setEnabled(false);
             btnEliminar.setEnabled(false);
-         
+
             buscar = false;
         }
     }//GEN-LAST:event_chkBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        txtId.setEnabled(false);
+        txtId.setEditable(true);
         txtNombre.setEditable(true);
         txtCantidad.setEditable(true);
         txtPrecio.setEditable(true);
         txtNombre.requestFocus();
-
+         
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -912,9 +913,14 @@ public class Inventario extends javax.swing.JFrame {
             } else if (cmbTabla.getSelectedIndex() == 2) {//abarrotes
                 Tabla = "Abarrotes";
                 calculos();
+                codigo=txtId.getText();
                 insertarDMod();
-            } 
+            }
         }
+        txtId.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtCantidad.setText("");
 
 
     }//GEN-LAST:event_btnActualizarActionPerformed
@@ -934,7 +940,7 @@ public class Inventario extends javax.swing.JFrame {
                     eliminarTblYCDG();
                     limpiarEliminar();
                 }
-            } 
+            }
         }
 
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -958,7 +964,7 @@ public class Inventario extends javax.swing.JFrame {
         } else if (cmbRegistro.getSelectedIndex() == 2) {//abarrotes
             Tabla = "Abarrotes";
             rt = insertarDato.buscar(Tabla, codigo);
-        }  else if (cmbRegistro.getSelectedIndex() == 0) {
+        } else if (cmbRegistro.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "seleccione una categoria");
         }
 
@@ -997,27 +1003,28 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnAgregarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTodoActionPerformed
 
-        if (cmbRegistro.getSelectedIndex()==0) {
-            JOptionPane.showMessageDialog(null,"Seleccione la categoria","ERROR DEL SISTEMA",JOptionPane.ERROR_MESSAGE);
-        }else{
-        setTabla();
-        ru = insertarDato.buscarNoE(Tabla);
-        try {
-            while (ru.next()) {
-                String[] datos = new String[8];
-                datos[0] = ru.getString(1);
-                datos[1] = Tabla;
-                datos[2] = ru.getString(2);
-                datos[3] = ru.getString(3);
-                datos[4] = ru.getString(4);
-                datos[5] = ru.getString(5);
-                datos[6] = ru.getString(6);
-                datos[7] = ru.getString(7);
-                modelo.addRow(datos);
+        if (cmbRegistro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione la categoria", "ERROR DEL SISTEMA", JOptionPane.ERROR_MESSAGE);
+        } else {
+            setTabla();
+            ru = insertarDato.buscarNoE(Tabla);
+            try {
+                while (ru.next()) {
+                    String[] datos = new String[8];
+                    datos[0] = ru.getString(1);
+                    datos[1] = Tabla;
+                    datos[2] = ru.getString(2);
+                    datos[3] = ru.getString(3);
+                    datos[4] = ru.getString(4);
+                    datos[5] = ru.getString(5);
+                    datos[6] = ru.getString(6);
+                    datos[7] = ru.getString(7);
+                    modelo.addRow(datos);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + ex);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERROR DEL SISTEMA " + ex);
-        }}
+        }
     }//GEN-LAST:event_btnAgregarTodoActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
